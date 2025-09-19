@@ -68,3 +68,6 @@ nav{
     border: black 2px solid;
 }
 
+.invalid-name{
+    color: red;
+}
