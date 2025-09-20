@@ -1,17 +1,14 @@
 document.getElementById("btn-validate").addEventListener("click", (e)=>{
     e.preventDefault()
 
-    let name = document.getElementById("name").value 
-    
+    let n= document.getElementById("name").value 
 
-    if(name.length <2){
-
+    if(n.length <2){
         showInvalidName()
     }else{
-        window.location.href = `pages/menus.html`
+        window.location.href = `pages/menus.html?n=${encodeURIComponent(n)}`
     }
 })
-
 
 
 const showInvalidName =() =>{
