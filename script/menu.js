@@ -1,4 +1,8 @@
 
+const params = new URLSearchParams(location.search)
+const name = params.get('n')
+
+document.getElementById("name-user").textContent = `Bonjour ${name}`
 
 const fetchMenu = async () => {
     try {
@@ -32,6 +36,9 @@ const showMenu = (item) => {
     sectionMenu.appendChild(div)
     div.classList.add("div-container")
 
+    const divMenu = document.createElement("div")
+    div.appendChild(divMenu)
+    divMenu.classList.add("div-menu")
 
     const name = document.createElement("p")
     name.classList.add("name-plate")
@@ -49,6 +56,6 @@ const showMenu = (item) => {
     btn.classList.add("btn")
     btn.textContent= "Commander"
 
-    div.append(name,description,img,btn)
+    divMenu.append(name,description,img,btn)
     
 }
