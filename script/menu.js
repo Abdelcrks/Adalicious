@@ -1,8 +1,8 @@
 
 const params = new URLSearchParams(location.search)
-const name = params.get('n')
+const n = params.get('n')
 
-document.getElementById("name-user").textContent = `Bonjour ${name}`
+document.getElementById("name-user").textContent = `Bonjour ${n}`
 
 const fetchMenu = async () => {
     try {
@@ -52,10 +52,17 @@ const showMenu = (item) => {
     img.classList.add("img")
     img.textContent = item.image
 
-    const btn = document.createElement("button")
+    const btn = document.createElement("btn")
     btn.classList.add("btn")
     btn.textContent= "Commander"
+    btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = `preparation.html?n=${encodeURIComponent(n)}`;
+  });
 
     divMenu.append(name,description,img,btn)
     
 }
+
+
+
