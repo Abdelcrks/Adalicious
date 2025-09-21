@@ -52,12 +52,22 @@ const showMenu = (item) => {
     img.classList.add("img")
     img.textContent = item.image
 
-    const btn = document.createElement("btn")
+    const btn = document.createElement("button")
     btn.classList.add("btn")
     btn.textContent= "Commander"
+
+    btn.dataset.menuName = item.plate
+    btn.dataset.menuImg = item.image
+
     btn.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.href = `preparation.html?n=${encodeURIComponent(n)}`;
+
+
+    const queryString = new URLSearchParams(location.search)
+    queryString.set("menuName", btn.dataset.menuName)
+    queryString.set("menuImg", btn.dataset.menuImg)
+
+    window.location.href = `preparation.html?${queryString.toString()}`;
   });
 
     divMenu.append(name,description,img,btn)
