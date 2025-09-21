@@ -167,3 +167,43 @@ nav{
     font-size: 1.5rem;
 }
 
+
+
+
+#section-preparation {
+    width: 75vw;
+    margin: 0 auto;
+    padding: 5rem;
+}
+
+#section-preparation h2{
+    font-size: 2.2rem;
+}
+
+.div-preparation{
+    display: flex;
+    background-color: #e9ecef;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    border: 2px solid black;
+}
+
+.status{
+    font-size: 3.5rem;
+    font-weight: 600;
+    color: #61b16f;
+}
+
+.plate-preparation{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.img-preparation{
+    font-size: 10rem;
+    border: 2px solid #61b16f;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
