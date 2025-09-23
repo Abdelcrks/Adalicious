@@ -1,8 +1,8 @@
 
 const params = new URLSearchParams(location.search)
-const n = params.get('n')
+const name = params.get('n')
 
-document.getElementById("name-user").textContent = `Bonjour ${n}`
+document.getElementById("name-user").textContent = `Bonjour ${name}`
 
 const fetchMenu = async () => {
     try {
@@ -24,7 +24,6 @@ const fetchMenu = async () => {
 }
 
 fetchMenu()
-
 
 
 const sectionMenu = document.getElementById("section-menu")
@@ -62,10 +61,12 @@ const showMenu = (item) => {
     btn.addEventListener('click', (e) => {
     e.preventDefault();
 
+    commanderPlat(item)
 
     const queryString = new URLSearchParams(location.search)
     queryString.set("menuName", btn.dataset.menuName)
     queryString.set("menuImg", btn.dataset.menuImg)
+    
 
     window.location.href = `preparation.html?${queryString.toString()}`;
   });
@@ -76,3 +77,22 @@ const showMenu = (item) => {
 
 
 
+async function commanderPlat(item) {  
+    try {    
+        const resp = await fetch("http://localhost:3000/orders", {      
+            method: "POST",      
+            headers: { "Content-Type": "application/json" },      
+            body: JSON.stringify({        
+            id: item.id,        
+            plate: item.plate,        
+            clientName: name,      
+            }),    
+            });
+        const data = await resp.json();    
+        if (!data.ok) throw new Error(data.error);
+        alert(`✅ ${data.message}`);  } 
+        catch (e) 
+        {    
+        alert("❌ Impossible d'envoyer la commande.");    
+        console.error(e);  }
+        }
