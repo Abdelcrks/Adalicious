@@ -6,7 +6,7 @@ document.getElementById("name-user").textContent = `Bonjour ${name}`
 
 const fetchMenu = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/menu`);
+        const response = await fetch(`http://localhost:3000/menus`);
         const menus =  await response.json()
 
 
