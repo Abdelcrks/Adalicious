@@ -1,6 +1,19 @@
 
 const params = new URLSearchParams(location.search)
 const name = params.get('n')
+const currentUserId = Number(params.get("user_id"));
+
+
+
+console.log("[menus] user_id reçu:", currentUserId, "name:", name);
+
+// if (!currentUserId || Number.isNaN(currentUserId)) {
+//   alert("Utilisateur introuvable (user_id manquant). Retour à l'accueil.");
+//   location.href = "../index.html";
+// }
+
+
+
 
 document.getElementById("name-user").textContent = `Bonjour ${name}`
 
@@ -9,15 +22,12 @@ const fetchMenu = async () => {
         const response = await fetch(`http://localhost:3000/menus`);
         const menus =  await response.json()
 
-
         console.log(menus)      
 
-        
         menus.forEach(item => {
              showMenu(item)
         });
        
-
     } catch (error) {
         console.log("erreur", error)
     }
@@ -39,9 +49,9 @@ const showMenu = (item) => {
     div.appendChild(divMenu)
     divMenu.classList.add("div-menu")
 
-    const name = document.createElement("p")
-    name.classList.add("name-plate")
-    name.textContent = item.plate
+    const plateName = document.createElement("p")
+    plateName.classList.add("name-plate")
+    plateName.textContent = item.plate
 
     const description = document.createElement("p")
     description.classList.add("description")
@@ -58,20 +68,21 @@ const showMenu = (item) => {
     btn.dataset.menuName = item.plate
     btn.dataset.menuImg = item.image
 
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    commanderPlat(item)
-
+    const bddOk = commanderPlat(item)
+    if(!bddOk){
+        return
+    }
     const queryString = new URLSearchParams(location.search)
     queryString.set("menuName", btn.dataset.menuName)
     queryString.set("menuImg", btn.dataset.menuImg)
-    
 
     window.location.href = `preparation.html?${queryString.toString()}`;
   });
 
-    divMenu.append(name,description,img,btn)
+    divMenu.append(plateName,description,img,btn)
     
 }
 
@@ -82,17 +93,21 @@ async function commanderPlat(item) {
         const resp = await fetch("http://localhost:3000/orders", {      
             method: "POST",      
             headers: { "Content-Type": "application/json" },      
-            body: JSON.stringify({        
-            id: item.id,        
-            plate: item.plate,        
-            clientName: name,      
+            body: JSON.stringify({
+            user_id: currentUserId,  
+            menu_id: item.menu_id
             }),    
             });
-        const data = await resp.json();    
-        if (!data.ok) throw new Error(data.error);
+            console.log('resp ',resp)
+        if (!resp.ok) throw new Error(resp.error);
+
+        const data = await resp.json();  
+
         alert(`✅ ${data.message}`);  } 
         catch (e) 
         {    
         alert("❌ Impossible d'envoyer la commande.");    
-        console.error(e);  }
-        }
+        console.log('Error :', e);  }
+}
+
+
